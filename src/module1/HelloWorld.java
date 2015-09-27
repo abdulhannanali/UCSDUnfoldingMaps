@@ -6,6 +6,7 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.providers.AbstractMapProvider;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
 /** HelloWorld
@@ -43,10 +44,12 @@ public class HelloWorld extends PApplet
 
 		// This sets the background color for the Applet.  
 		// Play around with these numbers and see what happens!
-		this.background(200, 200, 200);
+		this.background(173, 233, 32);
 		
 		// Select a map provider
 		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
+		// Select another map provider
+		AbstractMapProvider provider2  = new OpenStreetMap.OpenStreetMapProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 		
@@ -54,6 +57,7 @@ public class HelloWorld extends PApplet
 			// If you are working offline, you need to use this provider 
 			// to work with the maps that are local on your computer.  
 			provider = new MBTilesMapProvider(mbTilesString);
+			provider2 = new MBTilesMapProvider(mbTilesString);
 			// 3 is the maximum zoom level for working offline
 			zoomLevel = 3;
 		}
@@ -66,17 +70,16 @@ public class HelloWorld extends PApplet
 		// There are several providers built-in.
 		// Note if you are working offline you must use the MBTilesMapProvider
 		map1 = new UnfoldingMap(this, 50, 50, 350, 500, provider);
-
 		// The next line zooms in and centers the map at 
 	    // 32.9 (latitude) and -117.2 (longitude)
 	    map1.zoomAndPanTo(zoomLevel, new Location(32.9f, -117.2f));
-		
 		// This line makes the map interactive
 		MapUtils.createDefaultEventDispatcher(this, map1);
-		
 		// TODO: Add code here that creates map2 
 		// Then you'll modify draw() below
-
+		map2 = new UnfoldingMap(this, 425, 50, 350, 500, provider2);
+		map2.zoomAndPanTo(zoomLevel, new Location(-22.9f, -43.2f));
+		MapUtils.createDefaultEventDispatcher(this, map2);
 	}
 
 	/** Draw the Applet window.  */
@@ -84,6 +87,7 @@ public class HelloWorld extends PApplet
 		// So far we only draw map1...
 		// TODO: Add code so that both maps are displayed
 		map1.draw();
+		map2.draw();
 	}
 
 	
