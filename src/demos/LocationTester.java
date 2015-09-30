@@ -16,6 +16,7 @@ public class LocationTester {
 		
 		//latitude = -12.04;
 		System.out.println(ucsd.distance(lima));
+		System.out.println(lima.distance(ucsd));
 	}
 
 }
