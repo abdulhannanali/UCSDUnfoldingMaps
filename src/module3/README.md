@@ -4,9 +4,9 @@ Module 3  Programming Assignment of this course was an interesting one and reall
 
 ###### Assignment Objectives
 The assignment had 3 fundamental objectives.
-    * Add markers to the map
-    * Customize the markers according to magnitude
-    * Provide a key
+* Add markers to the map
+* Customize the markers according to magnitude
+* Provide a key
 
 The skeleton code was especially helpful for this assignment. I took some time to learn from it and without it the assignment wouldn't have been possible but it indeed made some things easier. 
 
