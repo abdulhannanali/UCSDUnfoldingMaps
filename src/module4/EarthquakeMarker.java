@@ -103,7 +103,6 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		int black = pg.color(0, 0, 0);
 		
 		String age = getAge();
-		System.out.println(getAge());
 		float radius = getMagnitude();
 		
 		pg.fill(black);

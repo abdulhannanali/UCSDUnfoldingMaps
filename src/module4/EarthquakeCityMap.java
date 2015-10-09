@@ -40,8 +40,6 @@ public class EarthquakeCityMap extends PApplet {
 	/** This is where to find the local tiles, for working without an Internet connection */
 	public static String mbTilesString = "blankLight-1-3.mbtiles";
 	
-	
-
 	//feed with magnitude 2.5+ Earthquakes
 	private String earthquakesURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
 	
@@ -79,8 +77,8 @@ public class EarthquakeCityMap extends PApplet {
 //		earthquakesURL = "test1.atom";
 //		earthquakesURL = "test2.atom";
 		
-		// WHEN TAKING THIS QUIZ: Uncomment the next line
-		//earthquakesURL = "quiz1.atom";
+//		 WHEN TAKING THIS QUIZ: Uncomment the next line
+		earthquakesURL = "quiz1.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -192,6 +190,16 @@ public class EarthquakeCityMap extends PApplet {
 		text("Intermediate", 65, 254);
 		text("Deep", 65, 274);
 		
+		// Earthquake duration mark
+		// For Past Hour
+		// An ellipse with X constructed with lines over it
+		fill(white);
+		ellipse(55, 215, 10, 10);
+		line(50, 210, 60, 220);
+		line(60, 210, 50, 220);
+		// Past Hour age mark label
+		fill(black);
+		text("Past Hour", 65, 215);
 		
 	}
 
