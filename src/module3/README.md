@@ -17,7 +17,7 @@ As written in the assignment I took time to understand the Classes which were se
     
 After understanding the skeleton code and the above mentioned classes the coding was just a matter of taking simple steps. The *helper method* `createMarker()` gave me an idea how can I modularize my code better. I also created another helper method called `createMarkers()` which *returned ArrayList<Marker>* and this called `createMarker()`.
 
-** createMarker() further implementation** 
+** createMarker() further implementation ** 
 Using the properties in PointFeature I stylized the SimplePointMarker for each earthquake. According to the specifications. 
 
  
@@ -25,7 +25,7 @@ Using the properties in PointFeature I stylized the SimplePointMarker for each e
 ### Approximate Time taken: 2.5 hours
 
 
-** Luckily I completed all of the objectives**
+** Luckily I completed all of the objectives **
 
 Here's a screen shot of the Assignment version matching the one in the specification
 ![Module 3 Assignment Version 1](http://i.imgur.com/unzWN9s.png)

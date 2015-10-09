@@ -89,7 +89,7 @@ public class EarthquakeCityMap extends PApplet {
 	    	map.addMarker(createMarker(f));
 	    }
 	    
-	    markers = createMarkers(earthquakes);
+	    markers = createMarkers(earthquakes);	
 	    
 	    map.addMarkers(markers);
 	    

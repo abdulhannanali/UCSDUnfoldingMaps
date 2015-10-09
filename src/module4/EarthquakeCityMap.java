@@ -20,7 +20,7 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Hannan Ali
  * Date: July 17, 2015
  * */
 public class EarthquakeCityMap extends PApplet {
@@ -76,8 +76,8 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
-		//earthquakesURL = "test2.atom";
+//		earthquakesURL = "test1.atom";
+//		earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
 		//earthquakesURL = "quiz1.atom";
@@ -131,7 +131,14 @@ public class EarthquakeCityMap extends PApplet {
 	
 	// helper method to draw key in GUI
 	// TODO: Update this method as appropriate
-	private void addKey() {	
+	private void addKey() {
+		int red = color(255, 0, 0);
+		int black = color(0, 0, 0);
+		int blue = color(0, 0, 255);
+		int yellow = color(255, 255, 0);
+		int green = color(0, 255, 0);
+		int white = color(255, 255, 255);
+		
 		// Remember you can use Processing's graphics methods here
 		fill(255, 250, 240);
 		rect(25, 50, 150, 250);
@@ -141,17 +148,51 @@ public class EarthquakeCityMap extends PApplet {
 		textSize(12);
 		text("Earthquake Key", 50, 75);
 		
-		fill(color(255, 0, 0));
-		ellipse(50, 125, 15, 15);
-		fill(color(255, 255, 0));
-		ellipse(50, 175, 10, 10);
-		fill(color(0, 0, 255));
-		ellipse(50, 225, 5, 5);
+		// CityMarker Triangle
+		int TRI_SIZE = 10; 
+		fill(red);
+		stroke(black);
+		triangle(55, 125 - TRI_SIZE, 55 - TRI_SIZE, 125, 55 + TRI_SIZE, 125);
+		// CityMarker Label
+		fill(black);
+		text("CityMarker", 55 + TRI_SIZE + 5, 118);
 		
-		fill(0, 0, 0);
-		text("5.0+ Magnitude", 75, 125);
-		text("4.0+ Magnitude", 75, 175);
-		text("Below 4.0", 75, 225);
+		textSize(10);
+		// LandQuakeMarker Label
+		text("LandQuakeMarker", 65, 150);
+		//LandQuakeMarker Circle
+		int circleRadius = 10;
+		fill(white);
+		stroke(black);
+		ellipse(55, 150, 10, 10);
+		
+		// OceanQuakeMarker Rectangle
+		rect(50, 175, 10, 10);
+		
+		fill(black);
+		// OceanQuakeMarker label
+		text("OceanQuakeMarker", 65, 175);
+	
+		// size estimation
+		text("size ~ magnitude", 50, 190);
+		
+		// ellipses for shallow, intermediate and deep
+		fill(yellow);
+		ellipse(55, 240, 12, 12);
+		fill(blue);
+		ellipse(55, 260, 12, 12);
+		fill(red);
+		ellipse(55, 280, 12, 12);
+		
+		// Labels for shallow, intermediate and deep
+		fill(black);
+		stroke(black);
+		textSize(12);
+		text("Shallow", 65, 234);
+		text("Intermediate", 65, 254);
+		text("Deep", 65, 274);
+		
+		
 	}
 
 	
@@ -163,8 +204,11 @@ public class EarthquakeCityMap extends PApplet {
 	private boolean isLand(PointFeature earthquake) {
 		
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
-		
-		// TODO: Implement this method using the helper method isInCountry
+		for (Marker country: countryMarkers){
+			if (isInCountry(earthquake, country)){
+				return true;
+			}
+		}
 		
 		// not inside any country
 		return false;
@@ -178,7 +222,30 @@ public class EarthquakeCityMap extends PApplet {
 	// And LandQuakeMarkers have a "country" property set.
 	private void printQuakes() 
 	{
-		// TODO: Implement this method
+		System.out.printf("\nCountry\nEarthquakes\n");
+		int oceanQuakes = 0;
+		for (Marker country: countryMarkers){
+			String countryName = country.getProperty("name").toString();
+			int numEarthquakes = 0;
+			for (Marker eq: quakeMarkers){
+				if (eq instanceof LandQuakeMarker){
+					if (eq.getProperty("country").equals(countryName)){
+						numEarthquakes++;
+					}
+				}
+			}
+			if (numEarthquakes > 0){
+				System.out.printf("\n%s\n%d\n",countryName, numEarthquakes);		
+			}
+		}
+		
+		/// Calculating the Ocean Quakes
+		for (Marker eq: quakeMarkers){
+			if (eq instanceof OceanQuakeMarker){
+				oceanQuakes++;
+			}
+		}
+		System.out.printf("\nOCEAN QUAKES\n%d\n",oceanQuakes);
 	}
 	
 	

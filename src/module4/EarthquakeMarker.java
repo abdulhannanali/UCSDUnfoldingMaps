@@ -1,4 +1,4 @@
-package module4;
+	package module4;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
@@ -65,6 +65,7 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		drawEarthquake(pg, x, y);
 		
 		// OPTIONAL TODO: draw X over marker if within past day		
+		markDuration(pg, x, y);
 		
 		// reset to previous styling
 		pg.popStyle();
@@ -76,9 +77,45 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// But this is up to you, of course.
 	// You might find the getters below helpful.
 	private void colorDetermine(PGraphics pg) {
-		//TODO: Implement this method
+		int yellow = pg.color(255, 255, 0);
+		int blue = pg.color(0, 0, 255);
+		int red = pg.color(255, 0, 0);
+		
+		float depth = getDepth();
+		if (depth < THRESHOLD_INTERMEDIATE){
+			// yellow for shallow earthquake
+			pg.fill(yellow);
+		}
+		else if(depth >= THRESHOLD_INTERMEDIATE && depth < THRESHOLD_DEEP){
+			// blue for intermediate earthquake
+			pg.fill(blue);
+		}
+		else if(depth >= THRESHOLD_DEEP){
+			// red for deep earthquake
+			pg.fill(red);
+		}
 	}
 	
+	// marks the duration according to the time at which earthquake occured
+	// supports the 
+	// Past Hour
+	private void markDuration(PGraphics pg, float x, float y){
+		int black = pg.color(0, 0, 0);
+		
+		String age = getAge();
+		System.out.println(getAge());
+		float radius = getMagnitude();
+		
+		pg.fill(black);
+		pg.stroke(black);
+		
+		if (age.equals("Past Hour")){
+			// Draw an X by using lines
+			// "/" line
+			pg.line(x + radius, y - radius, x - radius, y + radius);
+			pg.line(x - radius, y - radius, x + radius, y + radius);
+		}
+	}
 	
 	/*
 	 * getters for earthquake properties
@@ -99,6 +136,10 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	
 	public float getRadius() {
 		return Float.parseFloat(getProperty("radius").toString());
+	}
+	
+	public String getAge() {
+		return (getProperty("age").toString());
 	}
 	
 	public boolean isOnLand()
