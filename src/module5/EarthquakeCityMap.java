@@ -100,7 +100,7 @@ public class EarthquakeCityMap extends PApplet {
 		  }
 		  // OceanQuakes
 		  else {
-		    quakeMarkers.add(new OceanQuakeMarker(feature));
+		    quakeMarkers.add(new OceanQuakeMarker(feature, map));
 		  }
 	    }
 
@@ -323,6 +323,7 @@ public class EarthquakeCityMap extends PApplet {
 			}
 		}
 		System.out.println("OCEAN QUAKES: " + totalWaterQuakes);
+		
 	}
 	
 	

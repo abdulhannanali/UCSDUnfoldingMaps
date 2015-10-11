@@ -20,6 +20,9 @@ import processing.core.PGraphics;
 // in module 5 (i.e. CityMarker extends CommonMarker).  It will cause an error.
 // That's what's expected.
 public class CityMarker extends CommonMarker {
+
+	public float accurateX;
+	public float accurateY;
 	
 	public static int TRI_SIZE = 5;  // The size of the triangle marker
 	
@@ -39,6 +42,9 @@ public class CityMarker extends CommonMarker {
 	 * Implementation of method to draw marker on the map.
 	 */
 	public void drawMarker(PGraphics pg, float x, float y) {
+		accurateX = x;
+		accurateY = y;
+		
 		// Save previous drawing style
 		pg.pushStyle();
 		

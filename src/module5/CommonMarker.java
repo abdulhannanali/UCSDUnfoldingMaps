@@ -1,6 +1,8 @@
 package module5;
 
 import java.util.*;
+
+import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
@@ -24,6 +26,11 @@ public abstract class CommonMarker extends SimplePointMarker {
 	public CommonMarker(Location location, java.util.HashMap<java.lang.String,java.lang.Object> properties) {
 		super(location, properties);
 	}
+	
+	// Adding an additional constructor for getting the map too
+//	public CommonMarker(Location location, UnfoldingMap map){
+//		super(location, map);
+//	}
 	
 	// Getter method for clicked field
 	public boolean getClicked() {

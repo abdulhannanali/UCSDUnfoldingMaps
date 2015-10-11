@@ -1,6 +1,6 @@
 package module5;
 
-import java.util.List;
+import java.util.*;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.Marker;
@@ -38,6 +38,9 @@ public abstract class EarthquakeMarker extends CommonMarker
 	/** Greater than or equal to this threshold is a deep depth */
 	public static final float THRESHOLD_DEEP = 300;
 
+	// threatenedCityMarkers
+	List<Marker> threatenedCityMarkers;
+	
 	// ADD constants for colors if you want
 
 	
@@ -129,26 +132,55 @@ public abstract class EarthquakeMarker extends CommonMarker
 	 */
 	@Override
 	public void showThreat(List<Marker> quakeMarkers, List<Marker> cityMarkers){
-		double threat = threatCircle();
-		
-		// hiding all other quakeMarkers
+		hideOtherQuakes(quakeMarkers);
+		showAndAddThreatenedCities(cityMarkers);
+	}
+	
+	// hides all other quakeMarkers
+	private void hideOtherQuakes(List<Marker> quakeMarkers){
 		for (Marker marker: quakeMarkers){
 			if (marker != this){
 				marker.setHidden(true);
 			}
 		}
+	}
+	
+	
+	/*
+	 * hiding the cities which are not threatened
+	 * if the city is threatened
+	 * adds the threatened city
+	 */
+	private void showAndAddThreatenedCities(List<Marker> cityMarkers){
+		if (threatenedCityMarkers == null){
+			threatenedCityMarkers = new ArrayList<Marker>();	
+		}
 		
-		// Looping over all the cities 
-		// Hiding the cities which are safe
+		// threat circle in km
+		double threat = threatCircle();
+		
+		// Looping over all the cityMarker
+		// Adding the cities which are threatened by the earthquake
 		for (Marker marker: cityMarkers){
 			if ((marker).getDistanceTo(this.location) > threat){
 				marker.setHidden(true);
 			}
 			else {
-				marker.setHidden(false);
+				// Not hiding marker means threatenedCities are already displayed
+				
+				addThreatenedCity(marker);
 			}
 		}
 	}
+	
+	// Adds the the threatened City if not in the list already
+	private void addThreatenedCity(Marker cityMarker){
+		System.out.println(cityMarker.getProperties().toString());
+		if (threatenedCityMarkers.indexOf(cityMarker) == -1) {
+			threatenedCityMarkers.add(cityMarker);	
+		}
+	}
+	
 	/**
 	 * Return the "threat circle" radius, or distance up to 
 	 * which this earthquake can affect things, for this earthquake.   
