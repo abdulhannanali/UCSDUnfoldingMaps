@@ -1,6 +1,9 @@
 package module5;
 
+import java.util.List;
+
 import de.fhpotsdam.unfolding.data.PointFeature;
+import de.fhpotsdam.unfolding.marker.Marker;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for earthquakes on an earthquake map
@@ -93,11 +96,59 @@ public abstract class EarthquakeMarker extends CommonMarker
 	@Override
 	public void showTitle(PGraphics pg, float x, float y)
 	{
-		// TODO: Implement this method
 		
+		
+		// Displaying the title of the Earthquake
+		// When it's hovered over (or in other words selected)
+		
+		// color of the popup
+		int popupColor = pg.color(253, 237, 44);
+		int black = pg.color(0, 0, 0);
+		
+		String title = getTitle();
+		int fontSize = 12;
+		
+		// popup box
+		pg.fill(popupColor);
+		pg.rect(x, (y + getRadius() * 2) - (fontSize), pg.textWidth(title), fontSize + 2);
+		
+		// drawing the title of the earthquake
+		pg.fill(black);
+		pg.textSize(fontSize);
+		pg.text(title, x, y + getRadius() * 2);
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * @see module5.CommonMarker#showThreat(java.util.List)
+	 * Hides all other earthquakeMarkers
+	 * Measures the distance between the Earthquake and each cityMarker
+	 * Checks all the city for threat from the earthquake
+	 * Hides if it's threatened
+	 * Unhides if it's not threatened
+	 */
+	@Override
+	public void showThreat(List<Marker> quakeMarkers, List<Marker> cityMarkers){
+		double threat = threatCircle();
+		
+		// hiding all other quakeMarkers
+		for (Marker marker: quakeMarkers){
+			if (marker != this){
+				marker.setHidden(true);
+			}
+		}
+		
+		// Looping over all the cities 
+		// Hiding the cities which are safe
+		for (Marker marker: cityMarkers){
+			if ((marker).getDistanceTo(this.location) > threat){
+				marker.setHidden(true);
+			}
+			else {
+				marker.setHidden(false);
+			}
+		}
+	}
 	/**
 	 * Return the "threat circle" radius, or distance up to 
 	 * which this earthquake can affect things, for this earthquake.   
